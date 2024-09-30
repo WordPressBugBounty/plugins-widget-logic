@@ -3,7 +3,7 @@ Contributors: widgetlogics
 Tags: widget, sidebar, conditional tags, blocks, gutenberg widgets
 Requires at least: 3.0
 Tested up to: 6.6
-Stable tag: 6.02
+Stable tag: 6.0.3
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -42,9 +42,9 @@ Aside from logic against your widgets, there are three options added to the foot
 
 = Interaction with External Services =
 
-Widget Logic uses the external service  to obtain up-to-date information about the results of football matches. widgetlogic.org is a source of sports information, that provides a wide range of information about football, including various leagues, tournaments, and championships from around the world.
+Widget Logic uses the external service to obtain up-to-date information about the results of football matches. [widgetlogic.org](https://widgetlogic.org) is a source of sports information, that provides a wide range of information about football, including various leagues, tournaments, and championships from around the world.
 
-The functioning of the widgetlogic.org service is based on delivering real-time data about selected matches without the need to refresh the page. This means that data is automatically updated without requiring page reload. This approach ensures users quick and uninterrupted access to the latest sports data without the effort of manually updating information, allowing them to stay informed about ongoing events in real-time.
+The functioning of the [widgetlogic.org](https://widgetlogic.org) service is based on delivering real-time data about selected matches without the need to refresh the page. This means that data is automatically updated without requiring page reload. This approach ensures users quick and uninterrupted access to the latest sports data without the effort of manually updating information, allowing them to stay informed about ongoing events in real-time.
 
 == Frequently Asked Questions ==
 
@@ -125,7 +125,11 @@ Tighten up your definitions with PHPs 'logical AND' &&, for example:
 
 == Changelog ==
 
-= 6.02 =
+= 6.0.3 =
+
+* added settings option for enable new functionality
+
+= 6.0.2 =
 
 * fixed bug for php7.2
 

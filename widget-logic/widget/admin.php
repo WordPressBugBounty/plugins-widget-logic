@@ -16,9 +16,7 @@ function widget_logic_in_widget_form($widget, $return, $instance)
             class="widefat"
             name="<?php echo esc_attr($widget->get_field_name('widget_logic')); ?>"
             id="<?php echo esc_attr($widget->get_field_id('widget_logic')); ?>"
-        >
-            <?php echo esc_textarea($logic) ?>
-        </textarea>
+        ><?php echo esc_textarea($logic) ?></textarea>
     </p>
     <?php
     return;
@@ -299,9 +297,7 @@ function widget_logic_extra_control()
             <?php esc_html_e('Widget logic:', 'widget-logic') ?>
         </label>
         <?php if (!empty($wp_customize) && $wp_customize->is_preview()): ?>
-            <textarea class="widefat" id="<?php echo esc_attr($input_id) ?>" readonly>
-                <?php echo esc_textarea($logic) ?>
-            </textarea>
+            <textarea class="widefat" id="<?php echo esc_attr($input_id) ?>" readonly><?php echo esc_textarea($logic) ?></textarea>
             <br>
             <span class="description">
                 <?php
@@ -323,9 +319,7 @@ function widget_logic_extra_control()
                 class="widefat"
                 name="<?php echo esc_attr($input_name) ?>"
                 id="<?php echo esc_attr($input_id) ?>"
-            >
-                <?php echo esc_textarea($logic) ?>
-            </textarea>
+            ><?php echo esc_textarea($logic) ?></textarea>
         <?php endif ?>
         <?php wp_nonce_field('widget_logic_save', 'widget_logic_nonce'); ?>
     </p>

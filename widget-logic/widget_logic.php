@@ -3,8 +3,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 /*
 Plugin Name: Widget Logic
-Description: Control widgets with WP's conditional tags is_home etc
-Version:     6.02
+Description: Control widgets with WP's conditional tags is_home etc, for Enable Gutenberg widgets and new built-in widgets visit the settings page.
+Version:     6.0.3
 Author:      Widget Logic
 Author URI:  https://widgetlogic.org
 Text Domain: widget-logic
@@ -12,11 +12,20 @@ License:     GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */
 
-if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
-    include_once 'block/index.php';
+include_once 'WidgetLogicAdminConfig.php';
+$cfg = WidgetLogicAdminConfig::getInstance();
+
+// Add a link to the settings page in the plugin description area
+add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($cfg, 'addDescriptionSettingsLink'));
+
+if ($cfg->isFullyEnabled()) {
+    if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
+        include_once 'block/index.php';
+    }
+
+    include_once 'widget.php';
 }
 
-include_once 'widget.php';
 include_once 'widget/init.php';
 
 global $wl_options, $wl_in_customizer;
