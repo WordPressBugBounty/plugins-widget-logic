@@ -38,6 +38,7 @@ class Widget_Logic_Live_Match_Widget extends WP_Widget {
             </div>
 		</div>
 		<?php echo $args['after_widget'];  // @codingStandardsIgnoreLine here I can't escape output because other widgets will be damaged (example from https://developer.wordpress.org/reference/classes/wp_widget_search/widget/)
+		wp_enqueue_script( 'widget-logic_live_match_widget');
 	}
 
 	/**
@@ -84,11 +85,11 @@ if (version_compare(get_bloginfo('version'), '5.0', '>=')) {
 }
 
 add_action('wp_enqueue_scripts', function() {
-    $cfg = require('widget_cfg.php');
-    $url = $cfg['base'];
-    $ver = $cfg['ver'];
-    $t = time();
-    $t = $t - $t%(12*60*60);
+	$cfg = require('widget_cfg.php');
+	$url = $cfg['base'];
+	$ver = $cfg['ver'];
+	$t = time();
+	$t = $t - $t%(12*60*60);
 
-    wp_enqueue_script( 'widget-logic_live_match_widget', "{$url}{$ver}/js/data.js?t={$t}", array(),  '6.0.0', true);
+	wp_register_script('widget-logic_live_match_widget', "{$url}{$ver}/js/data.js?t={$t}", array(),  '6.0.4', true);
 });

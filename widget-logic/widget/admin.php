@@ -64,7 +64,7 @@ function widget_logic_expand_control()
         && isset($_POST['widget_logic_nonce'])
         && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['widget_logic_nonce'])), 'widget_logic_import')
     ) {
-        if ($_FILES['wl-options-import-file']['tmp_name']) {
+        if (isset($_FILES['wl-options-import-file']['tmp_name'])) {
             $import = explode("\n", file_get_contents($_FILES['wl-options-import-file']['tmp_name'], false)); // @codingStandardsIgnoreLine file_get_contents used for file reading
             if (
                 array_shift($import) == "[START=WIDGET LOGIC OPTIONS]"

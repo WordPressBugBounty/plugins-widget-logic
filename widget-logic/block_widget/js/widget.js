@@ -7,6 +7,7 @@ registerBlockType('widget-logic/widget-block', {
     title: __My('Live Match', 'widget-logic'),
     icon: 'embed-generic',
     category: 'widgets',
+    script: 'widget-logic_live_match_widget',
     attributes: {
         title: {
             type: 'string',

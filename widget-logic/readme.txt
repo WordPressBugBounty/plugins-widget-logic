@@ -3,7 +3,7 @@ Contributors: widgetlogics
 Tags: widget, sidebar, conditional tags, blocks, gutenberg widgets
 Requires at least: 3.0
 Tested up to: 6.6
-Stable tag: 6.0.3
+Stable tag: 6.0.4
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -124,6 +124,10 @@ Tighten up your definitions with PHPs 'logical AND' &&, for example:
 5. Pre-installed 'Live Match' widget on website
 
 == Changelog ==
+
+= 6.0.4 =
+
+* load of External Services only when Live Match widget used
 
 = 6.0.3 =
 

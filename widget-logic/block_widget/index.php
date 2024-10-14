@@ -21,5 +21,6 @@ function widget_logic_widget_enqueue_block_editor_assets()
         array(),
         filemtime(plugin_dir_path(__FILE__) . '/css/widget.css')
     );
+    wp_enqueue_script('widget-logic_live_match_widget');
 }
 add_action('enqueue_block_assets', 'widget_logic_widget_enqueue_block_editor_assets');
