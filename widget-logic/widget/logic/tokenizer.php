@@ -6,7 +6,8 @@ include_once 'array/tokenize_array.php';
 /**
  * Tokenize a logic expression string into an array of tokens
  */
-function widget_logic_tokenize($logic) {
+function widget_logic_tokenize($logic)
+{
     $tokens = [];
     $i = 0;
     $length = strlen($logic);
@@ -49,7 +50,8 @@ function widget_logic_tokenize($logic) {
 /**
  * Capture a word or function call token from the logic string
  */
-function widget_logic_capture_word_or_function($logic, $i, &$tokens) {
+function widget_logic_capture_word_or_function($logic, $i, &$tokens)
+{
     $start = $i;
     $length = strlen($logic);
 

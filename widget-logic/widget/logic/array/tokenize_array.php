@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 /**
  * Capture an array token from the logic string
  */
-function widget_logic_capture_array($logic, $i, &$tokens) {
+function widget_logic_capture_array($logic, $i, &$tokens)
+{
     $start = $i;
 
     if ('[' === $logic[$i]) {

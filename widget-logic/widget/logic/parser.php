@@ -41,7 +41,9 @@ function widget_logic_parse_expression(&$tokens, &$pos, $allowed_functions)
     return $result;
 }
 
-// Helper function to parse AND expressions (terms connected by &&)
+/**
+ * Helper function to parse AND expressions (terms connected by &&)
+ */
 function widget_logic_parse_and_expression(&$tokens, &$pos, $allowed_functions)
 {
     $result = widget_logic_parse_term($tokens, $pos, $allowed_functions);
@@ -73,7 +75,9 @@ function widget_logic_parse_and_expression(&$tokens, &$pos, $allowed_functions)
     return $result;
 }
 
-// Helper function to parse terms
+/**
+ * Helper function to parse terms
+ */
 function widget_logic_parse_term(&$tokens, &$pos, $allowed_functions)
 {
     if ($pos >= count($tokens)) {

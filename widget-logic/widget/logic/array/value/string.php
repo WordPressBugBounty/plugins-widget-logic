@@ -7,7 +7,8 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 /**
  * Check if value is a quoted string
  */
-function widget_logic_is_quoted_string($value, &$out_string) {
+function widget_logic_is_quoted_string($value, &$out_string)
+{
     if (('"' === substr($value, 0, 1) && '"' === substr($value, -1)) ||
         ("'" === substr($value, 0, 1) && "'" === substr($value, -1))) {
         $out_string = substr($value, 1, -1);
@@ -19,7 +20,8 @@ function widget_logic_is_quoted_string($value, &$out_string) {
 /**
  * Validate string values for security issues
  */
-function widget_logic_validate_string_value($string_value) {
+function widget_logic_validate_string_value($string_value)
+{
     // Check for PHP stream wrappers in strings
     $dangerous_wrappers = array('php://', 'file://', 'expect://', 'data://', 'zip://', 'glob://', 'phar://');
     foreach ($dangerous_wrappers as $wrapper) {

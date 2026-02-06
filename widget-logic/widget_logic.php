@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 /*
 Plugin Name: Widget Logic
 Description: Control widgets with WP's conditional tags is_home etc, for Enable Gutenberg widgets and new built-in widgets visit the settings page.
-Version:     6.0.6
+Version:     6.0.9
 Author:      Widget Logic
 Author URI:  https://widgetlogic.org
 Text Domain: widget-logic
@@ -16,7 +16,7 @@ include_once 'WidgetLogicAdminConfig.php';
 $cfg = WidgetLogicAdminConfig::getInstance();
 
 // Add a link to the settings page in the plugin description area
-add_filter('plugin_action_links_'.plugin_basename(__FILE__), array($cfg, 'addDescriptionSettingsLink'));
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($cfg, 'addDescriptionSettingsLink'));
 
 if ($cfg->isFullyEnabled()) {
     if (version_compare(get_bloginfo('version'), '5.0', '>=')) {

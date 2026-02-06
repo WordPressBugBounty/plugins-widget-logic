@@ -6,7 +6,8 @@ include_once __DIR__ . '/../function/is_function.php';
 /**
  * Process an array key with security checks
  */
-function widget_logic_process_array_key($key, $allowed_functions) {
+function widget_logic_process_array_key($key, $allowed_functions)
+{
     // Handle function calls in keys
     if (widget_logic_is_function_call(trim($key), $matches)) {
         $function_name = $matches[1];

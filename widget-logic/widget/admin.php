@@ -50,7 +50,7 @@ function widget_logic_expand_control()
 
         echo "[START=WIDGET LOGIC OPTIONS]\n";
         foreach ($wl_options as $id => $text) {
-            echo esc_attr($id)."\t" . wp_json_encode($text) . "\n";
+            echo esc_attr($id) . "\t" . wp_json_encode($text) . "\n";
         }
         echo "[STOP=WIDGET LOGIC OPTIONS]";
         exit;
@@ -72,7 +72,7 @@ function widget_logic_expand_control()
             ) {
                 foreach ($import as $import_option) {
                     list($key, $value) = explode("\t", $import_option);
-                    $wl_options[$key]  = json_decode($value);
+                    $wl_options[$key] = json_decode($value);
                 }
                 $wl_options['msg'] = __('Success! Options file imported', 'widget-logic');
             } else {
@@ -84,7 +84,7 @@ function widget_logic_expand_control()
         }
 
         update_option('widget_logic', $wl_options);
-        wp_redirect(admin_url('widgets.php'));
+        wp_safe_redirect(admin_url('widgets.php'));
         exit;
     }
 
@@ -103,8 +103,8 @@ function widget_logic_expand_control()
         }
 
         $wl_options['widget_logic-options-wp_reset_query'] = !empty($_POST['widget_logic-options-wp_reset_query']);
-        $wl_options['widget_logic-options-show_errors']    = !empty($_POST['widget_logic-options-show_errors']);
-        $wl_options['widget_logic-options-load_point']     = sanitize_text_field(wp_unslash(isset($_POST['widget_logic-options-load_point']) ? $_POST['widget_logic-options-load_point'] : ''));
+        $wl_options['widget_logic-options-show_errors'] = !empty($_POST['widget_logic-options-show_errors']);
+        $wl_options['widget_logic-options-load_point'] = sanitize_text_field(wp_unslash(isset($_POST['widget_logic-options-load_point']) ? $_POST['widget_logic-options-load_point'] : ''));
     }
 
     update_option('widget_logic', $wl_options);
@@ -121,7 +121,7 @@ function widget_logic_options_control()
         $isError = "OK" != substr($wl_options['msg'], 0, 2);
         $msgClass = $isError ? 'error' : 'updated';
 
-        echo '<div id="message" class="'.esc_attr($msgClass).'"><p>Widget Logic – '.esc_html($wl_options['msg']).'</p></div>';
+        echo '<div id="message" class="' . esc_attr($msgClass) . '"><p>Widget Logic – ' . esc_html($wl_options['msg']) . '</p></div>';
         unset($wl_options['msg']);
         update_option('widget_logic', $wl_options);
     }
@@ -169,11 +169,11 @@ function widget_logic_options_control()
                         >
                             <?php
                                 $wl_load_points = array(
-                                    'parse_query'       => __('after query variables set (default)', 'widget-logic'),
-                                    'plugins_loaded'    => __('when plugin starts', 'widget-logic'),
+                                    'parse_query' => __('after query variables set (default)', 'widget-logic'),
+                                    'plugins_loaded' => __('when plugin starts', 'widget-logic'),
                                     'after_setup_theme' => __('after theme loads', 'widget-logic'),
-                                    'wp_loaded'         => __('when all PHP loaded', 'widget-logic'),
-                                    'wp_head'           => __('during page header', 'widget-logic')
+                                    'wp_loaded' => __('when all PHP loaded', 'widget-logic'),
+                                    'wp_head' => __('during page header', 'widget-logic')
                                 );
                                 foreach ($wl_load_points as $action => $action_desc) {
                                     echo "<option value='" . esc_attr($action) . "'";
@@ -270,7 +270,7 @@ function widget_logic_extra_control()
     global $wp_customize;
     $args = func_get_args();
 
-    $callback  = array_pop($args);
+    $callback = array_pop($args);
     $widget_id = array_pop($args);
 
     if (is_callable($callback)) {
@@ -289,7 +289,7 @@ function widget_logic_extra_control()
         $logic = widget_logic_by_id($widget_id);
     }
 
-    $input_id   = "widget-$widget_id-widget_logic";
+    $input_id = "widget-$widget_id-widget_logic";
     $input_name = "widget-{$widget_id}[widget_logic]";
     ?>
     <p>

@@ -2,7 +2,8 @@
 // Exit if accessed directly.
 if (!defined('ABSPATH')) exit;
 
-function widget_logic_register_block() {
+function widget_logic_register_block()
+{
     register_logic_live_match_widget_service();
     register_block_type(__DIR__ . '/block.json');
 }

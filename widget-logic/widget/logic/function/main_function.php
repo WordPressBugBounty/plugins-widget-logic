@@ -13,7 +13,6 @@ include_once __DIR__ . '/../array/is_array.php';
  * @return mixed Result of the function call
  * @throws Exception If the function is not allowed or does not exist
  */
-
 function widget_logic_handle_function_call($matches, $allowed_functions)
 {
     $function_name = $matches[1];

@@ -2,8 +2,8 @@
 Contributors: widgetlogics
 Tags: widget, sidebar, conditional tags, blocks, gutenberg widgets
 Requires at least: 3.0
-Tested up to: 6.8
-Stable tag: 6.0.6
+Tested up to: 6.9
+Stable tag: 6.0.9
 Requires PHP: 5.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -13,8 +13,6 @@ Widget Logic lets you control on which pages widgets appear using WP's condition
 == Description ==
 This plugin gives every widget an extra control field called "Widget logic" that lets you control the pages that the widget will appear on. The text field lets you use WP's [Conditional Tags](http://codex.wordpress.org/Conditional_Tags), or any general PHP code.
 
-PLEASE NOTE The widget logic you introduce is EVAL'd directly. Anyone who has access to edit widget appearance will have the right to add any code, including malicious and possibly destructive functions. There is an optional filter 'widget_logic_eval_override' which you can use to bypass the EVAL with your own code if needed. (See [Other Notes](other_notes/)).
-
 The configuring and options are in the usual widget admin interface.
 
 BIG UPDATE:
@@ -22,6 +20,8 @@ BIG UPDATE:
 * Now you can control widget in Gutenberg Widgets editor as well as in Classic Editor. It is just as easy as before but also in gutenberg view.
 
 * Pre-installed widgets let you add special widget with one click of the mouse. First pre-installed widget is Live Match that let you add widget of one random live football game with real time score updates (teams logos, livescore, minute of the match, tournament name). And more interesting widgets to come!
+
+**NOTE ON DEFAULT FUNCTIONS:** Widget Logic includes a whitelist of common WordPress conditional tags and safe functions. If you need additional WordPress functions that are not currently whitelisted, please create a topic in our [support forum](https://wordpress.org/support/plugin/widget-logic/) to request them. We regularly add commonly requested functions in new releases.
 
 
 = Configuration =
@@ -39,6 +39,47 @@ Aside from logic against your widgets, there are three options added to the foot
 	You may need to delay the load if your logic depends on functions defined, eg in the theme functions.php file. Conversely you may want the load early so that the widget count is calculated correctly, eg to show an alternative layour or content when a sidebar has no widgets.
 
 *  Don't cache widget logic results -- From v .58 the widget logic code should only execute once, but that might cause unexpected results with some themes, so this option is here to turn that behaviour off. (The truth/false of the code will be evaluated every time the sidebars_widgets filter is called.
+
+* Custom PHP Functions -- From v.6.0.6 you can use the `widget_logic_allowed_functions` filter to add custom PHP functions that will be allowed in Widget Logic fields. By default, only WordPress conditional tags and a whitelist of safe functions are available. This filter allows you to extend the functionality and use your own custom functions.
+
+
+	To add a custom function, add the following code to your theme's `functions.php` file:
+
+	```add_filter('widget_logic_allowed_functions', 'my_allowed_functions');
+	function my_allowed_functions($functions) {
+		$functions[] = '_my_custom_function_name_';
+		return $functions;
+	}`
+
+
+	You can add multiple functions by using one wrapper function:
+
+	```add_filter('widget_logic_allowed_functions', 'my_allowed_functions');
+	function my_allowed_functions($functions) {
+		$functions[] = 'is_special_page';
+		$functions[] = 'is_user_verified';
+		$functions[] = 'get_sidebar_title';
+		return $functions;
+	}`
+
+
+	**IMPORTANT NOTE ON VARIABLES:** Widget Logic is designed to work with simple data types (strings, numbers, booleans). If you need to use complex variables, global state, or conditional logic that depends on many factors, create a custom function in your theme's `functions.php` file and call it from Widget Logic:
+
+	**Good approach (in functions.php):**
+
+	```function is_special_page() {
+		global $post;
+		$special_ids = array(5, 10, 15);
+		$conditions = some_complex_function();
+
+		return is_page() && in_array($post->ID, $special_ids) && $conditions;
+	}`
+
+	Then in Widget Logic field, simply use: `is_special_page()`
+
+
+	**Less ideal approach (in Widget Logic field):**
+	Avoid putting complex logic directly in the Widget Logic field. Keep it simple and let your custom function handle the complexity. This keeps your widget settings clean and maintainable.
 
 = Interaction with External Services =
 
@@ -125,11 +166,27 @@ Tighten up your definitions with PHPs 'logical AND' &&, for example:
 
 == Changelog ==
 
+= 6.0.8 =
+
+* Fixed minor bug with Live Match widget
+
+= 6.0.7 =
+
+* Enhanced Configuration section with detailed documentation for `widget_logic_allowed_functions` filter
+* Added examples for adding custom functions to Widget Logic
+* Added best practices guide for using variables with custom functions
+* Improved documentation on separating complex logic from Widget Logic fields
+* added support for more WordPress functions in the allowed functions in that account added:
+  - is_product_category
+  - has_category
+  - etc...
+
 = 6.0.6 =
 
 * reworked main logic function to avoid EVAL
 * !IMPORTANT! from this version not all php code will be executed in Widget Logic field
 * if you need more php functions you can add it with using `add_filter('widget_logic_allowed_functions', '[your_custom_function_here]');`
+* removed `widget_logic_eval_override` filter
 
 = 6.0.5 =
 
@@ -316,11 +373,6 @@ There are lots of great code examples on the WP forums, and on WP sites across t
 *	`is_single() && in_category('baked-goods')` -- single post that's in the category with this slug
 *	`current_user_can('level_10')` -- admin only widget
 * 	`strpos($_SERVER['HTTP_REFERER'], "google.com")!=false` -- widget to show when clicked through from a google search
-*	`is_category() && in_array($cat, get_term_children( 5, 'category'))` -- category page that's a descendent of category 5
-*	`global $post; return (in_array(77,get_post_ancestors($post)));` -- WP page that is a child of page 77
-*	`global $post; return (is_page('home') || ($post->post_parent=="13"));` -- home page OR the page that's a child of page 13
-
-Note the extra ';' on the end where there is an explicit 'return'.
-
-== The 'widget_logic_eval_override' filter ==
-Before the Widget Logic code is evaluated for each widget, the text of the Widget Logic code is passed through this filter. If the filter returns a BOOLEAN result, this is used instead to determine if the widget is visible. Return TRUE for visible.
+*	`is_category() && custom_function_to_check_the_category()` -- category page that's a descendent of category 5
+*	`custom_function_from_functions_php_to_check_the_page()` -- WP page that is a child of page 77
+*	`custom_function_from_functions_php_to_check_the_page_child_of(13)` -- home page OR the page that's a child of page 13

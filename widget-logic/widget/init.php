@@ -29,7 +29,7 @@ function widget_logic_customizer_display($widget_id)
 
     ob_start();
     $show_widget = widget_logic_check_logic($logic);
-    $error       = ob_get_clean();
+    $error = ob_get_clean();
 
     // Register a custom script handle
     wp_register_script('widget-logic-customizer-display-script', false, array('jquery'), '6.0.1', true);

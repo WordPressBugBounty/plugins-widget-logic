@@ -1,5 +1,5 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 class WidgetLogicAdminConfig
 {
@@ -8,18 +8,17 @@ class WidgetLogicAdminConfig
     private static $instance = null;
     protected $options;
 
-    public static function getInstance() {
-
+    public static function getInstance()
+    {
         if (null == self::$instance) {
             self::$instance = new self;
         }
 
         return self::$instance;
-
     }
 
-    private function __construct() {
-
+    private function __construct()
+    {
         // Add the page to the admin menu
         add_action('admin_menu', array(&$this, 'addPage'));
 
@@ -28,7 +27,6 @@ class WidgetLogicAdminConfig
 
         // Get registered option
         $this->options = get_option('widget_logic_settings_options');
-
     }
 
     public function isFullyEnabled()
@@ -36,7 +34,8 @@ class WidgetLogicAdminConfig
         return $this->getFullyEnabledValue() === self::ON;
     }
 
-    public function addDescriptionSettingsLink($links) {
+    public function addDescriptionSettingsLink($links)
+    {
         if ($this->isFullyEnabled()) {
             return $links;
         }
@@ -48,11 +47,13 @@ class WidgetLogicAdminConfig
         return $links;
     }
 
-    public function addPage() {
+    public function addPage()
+    {
         add_options_page('Theme Options', 'Widget Logic', 'manage_options', 'widget-logic', array($this, 'displayPage'));
     }
 
-    public function displayPage() {
+    public function displayPage()
+    {
     ?>
     <div class='wrap'>
 		<h1><?php esc_html_e('Widget Logic Settings', 'widget-logic'); ?></h1>
@@ -85,7 +86,8 @@ class WidgetLogicAdminConfig
     <?php
     }
 
-    public function registerPageOptions() {
+    public function registerPageOptions()
+    {
         // Add Section for option fields
         add_settings_section('widget_logic_section', '', array($this, 'displaySection'), __FILE__);
         add_settings_field('widget_logic_is_fully_enabled', 'Enable Gutenberg support', array($this, 'isEnabledSettingsField'), __FILE__, 'widget_logic_section');
@@ -94,7 +96,8 @@ class WidgetLogicAdminConfig
         register_setting(__FILE__, 'widget_logic_settings_options', array($this, 'validateOptions')); // phpcs:ignore -- this is simple array
     }
 
-    public function validateOptions($fields) {
+    public function validateOptions($fields)
+    {
         $valid_fields = array();
 
         $isEnabled = trim($fields['widget_logic_is_fully_enabled']);
@@ -103,23 +106,27 @@ class WidgetLogicAdminConfig
         return apply_filters('validateOptions', $valid_fields, $fields);
     }
 
-    public function displaySection() { /* Leave blank */ }
+    public function displaySection()
+    {
+        /* Leave blank */
+    }
 
     protected function getFullyEnabledValue()
     {
         return isset($this->options['widget_logic_is_fully_enabled']) ? $this->options['widget_logic_is_fully_enabled'] : self::OFF;
     }
 
-    public function isEnabledSettingsField() {
+    public function isEnabledSettingsField()
+    {
         $val = $this->getFullyEnabledValue();
 
-        $selected_one=array(self::ON => '', self::OFF => '');
+        $selected_one = array(self::ON => '', self::OFF => '');
         $selected_one[$val] = 'selected="selected"';
         echo "
         <div>
             <select name='widget_logic_settings_options[widget_logic_is_fully_enabled]'>
-                <option value='".esc_attr(self::OFF)."' ". esc_html($selected_one[self::OFF]) .">Disabled</option>
-                <option value='".esc_attr(self::ON)."' ". esc_html($selected_one[self::ON]) .">Enabled</option>
+                <option value='" . esc_attr(self::OFF) . "' " . esc_html($selected_one[self::OFF]) . ">Disabled</option>
+                <option value='" . esc_attr(self::ON) . "' " . esc_html($selected_one[self::ON]) . ">Enabled</option>
             </select>
         </div>
         ";

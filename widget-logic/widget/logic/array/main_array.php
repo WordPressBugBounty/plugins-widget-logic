@@ -8,7 +8,8 @@ include_once 'value/main_value.php';
 /**
  * Parse array strings into actual PHP arrays with security checks
  */
-function widget_logic_parse_array_string($array_str, $allowed_functions) {
+function widget_logic_parse_array_string($array_str, $allowed_functions)
+{
     $array_str = trim($array_str);
 
     // Handle empty arrays
@@ -36,7 +37,8 @@ function widget_logic_parse_array_string($array_str, $allowed_functions) {
 /**
  * Extract the inner string from array syntax
  */
-function widget_logic_extract_array_inner($array_str) {
+function widget_logic_extract_array_inner($array_str)
+{
     if (0 === strpos($array_str, 'array(') && ')' === substr($array_str, -1)) {
         return trim(substr($array_str, 6, -1));
     }
@@ -49,7 +51,8 @@ function widget_logic_extract_array_inner($array_str) {
 /**
  * Process a single array element and add it to the result array
  */
-function widget_logic_process_array_element($element, &$result, $allowed_functions) {
+function widget_logic_process_array_element($element, &$result, $allowed_functions)
+{
     // Check if it's a key => value pair
     if (preg_match('/^(.+?)=>(.+)$/s', $element, $matches)) {
         $key = trim($matches[1]);
@@ -68,8 +71,11 @@ function widget_logic_process_array_element($element, &$result, $allowed_functio
     }
 }
 
-// Helper function to split array elements, handling nested structures and quotes
-function widget_logic_split_array_elements($str) {
+/**
+ * Helper function to split array elements, handling nested structures and quotes
+ */
+function widget_logic_split_array_elements($str)
+{
     $elements = array();
     $current = '';
     $in_quotes = false;

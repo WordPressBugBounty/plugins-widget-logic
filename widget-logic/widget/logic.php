@@ -10,9 +10,58 @@ include_once 'logic/parser.php';
 function widget_logic_check_logic($logic)
 {
     $allowed_functions = array(
-        'is_home', 'is_front_page', 'is_single', 'is_page', 'is_category',
-        'is_tag', 'is_archive', 'is_search', 'is_404', 'is_user_logged_in',
-        'current_user_can', 'is_active_sidebar', 'is_admin',
+        // Main page checks
+        'is_home', 'is_front_page', 'is_admin',
+
+        // Single post/page checks
+        'is_single', 'is_page', 'is_singular', 'is_sticky', 'is_attachment', 'is_tree',
+
+        // Category, Tag & Taxonomy checks
+        'is_category', 'is_tag', 'is_tax', 'in_category', 'has_tag', 'has_term',
+        'is_product_category', 'taxonomy_exists', 'has_category',
+
+        // Archive checks
+        'is_archive', 'is_post_type_archive', 'is_author', 'is_multi_author',
+        'is_date', 'is_year', 'is_month', 'is_day', 'is_time',
+
+        // Special page checks
+        'is_search', 'is_404', 'is_privacy_policy', 'is_page_template',
+
+        // Post type checks
+        'get_post_type', 'post_type_exists', 'is_post_type_hierarchical', 'has_post_format',
+
+        // User & capability checks
+        'is_user_logged_in', 'current_user_can', 'is_super_admin',
+
+        // Sidebar & widget checks
+        'is_active_sidebar', 'has_nav_menu', 'in_the_loop',
+
+        // Multisite checks
+        'is_multisite', 'is_main_site',
+
+        // Plugin & theme checks
+        'is_plugin_active', 'is_child_theme', 'current_theme_supports',
+
+        // Feed & preview checks
+        'is_feed', 'is_trackback', 'is_preview',
+
+        // Content checks
+        'has_excerpt', 'comments_open', 'pings_open', 'is_new_day',
+        'has_post_thumbnail', 'has_shortcode', 'has_block', 'get_post_format',
+
+        // Device & request checks
+        'wp_is_mobile', 'is_rtl', 'is_customize_preview', 'wp_doing_ajax',
+
+        // Error & validation checks
+        'is_wp_error', 'is_email', 'is_serialized',
+
+        // Query checks
+        'is_main_query', 'is_paged',
+
+        // WooCommerce conditional tags
+        'is_woocommerce', 'is_shop', 'is_product', 'is_product_category',
+        'is_product_tag', 'is_cart', 'is_checkout', 'is_account_page',
+        'is_wc_endpoint_url',
     );
 
     $allowed_functions = apply_filters('widget_logic_allowed_functions', $allowed_functions);
@@ -75,7 +124,7 @@ function widget_logic_by_id($widget_id)
 
     if (preg_match('/^(.+)-(\d+)$/', $widget_id, $m)) {
         $widget_class = $m[1];
-        $widget_i     = $m[2];
+        $widget_i = $m[2];
 
         $info = get_option('widget_' . $widget_class);
         if (empty($info[$widget_i])) {
@@ -108,7 +157,7 @@ function widget_logic_save($widget_id, $logic)
 
     if (preg_match('/^(.+)-(\d+)$/', $widget_id, $m)) {
         $widget_class = $m[1];
-        $widget_i     = $m[2];
+        $widget_i = $m[2];
 
         $info = get_option('widget_' . $widget_class);
         if (!is_array($info[$widget_i])) {
